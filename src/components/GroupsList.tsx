@@ -23,7 +23,11 @@ function GroupsList() {
       <div className="container">
         <div className="columns is-multiline">
           {groups?.map((group) => {
-            return <Group key={group.id} {...group} />;
+            return (
+              <div className="column is-one-quarter-desktop is-one-third-tablet">
+                <Group key={group.id} {...group} />
+              </div>
+            );
           })}
         </div>
       </div>
