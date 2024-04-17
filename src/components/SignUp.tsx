@@ -81,7 +81,9 @@ function SignUp() {
                 />
               </div>
             </div>
-            <button className="button has-background-success">Submit</button>
+            <button className="button has-background-success has-text-white">
+              Sign up
+            </button>
           </form>
         </div>
       </div>
