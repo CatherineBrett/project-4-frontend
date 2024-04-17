@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <>
       <header>
-        <nav className="navbar is-primary">
+        <nav className="navbar is-success">
           <div className="container">
             <div className="navbar-brand">
               <Link to="/" className="navbar-item">
