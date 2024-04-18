@@ -1,17 +1,26 @@
-import { SyntheticEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { SyntheticEvent, useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-function LogIn( { fetchUser }: {fetchUser: Function }) {
-  
+function YourAccount() {
+  const { userId } = useParams();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
-    password: "",
+    current_password: "",
+    current_password_confirmation: "",
   });
 
-  // const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchUser() {
+        const resp = await fetch(`/api/users/${userId}`);
+        const userData = await resp.json();
+
+    }
+  })
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
@@ -21,17 +30,10 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    try {
-      e.preventDefault();
-      const resp = await axios.post("/api/login", formData);
-      localStorage.setItem("token", resp.data.token);
-      console.log("resp.data is: ", resp.data);
-      fetchUser()
-      navigate("/");
-    } catch (e: any) {
-      console.log(e)
-      // setErrorMessage(e.response.data.message)
-    }
+    e.preventDefault();
+    const resp = await axios.post("/api/signup", formData);
+    console.log("resp.data is: ", resp.data);
+    navigate("/login");
   }
 
   console.log("formData is: ", formData);
@@ -41,6 +43,18 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
       <div className="section">
         <div className="container">
           <form onSubmit={handleSubmit}>
+            <div className="field">
+              <label className="label">Username</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  name={"username"}
+                  onChange={handleChange}
+                  value={formData.username}
+                />
+              </div>
+            </div>
             <div className="field">
               <label className="label">Email</label>
               <div className="control">
@@ -64,10 +78,21 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
                   value={formData.password}
                 />
               </div>
-              {/* {errorMessage && <small className="has-text-danger">{errorMessage}</small>} */}
+            </div>
+            <div className="field">
+              <label className="label">Confirm password</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="password"
+                  name={"password_confirmation"}
+                  onChange={handleChange}
+                  value={formData.password_confirmation}
+                />
+              </div>
             </div>
             <button className="button has-background-success has-text-white">
-              Log in
+              Sign up
             </button>
           </form>
         </div>
@@ -76,4 +101,4 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
   );
 }
 
-export default LogIn;
+export default YourAccount;

@@ -1,7 +1,7 @@
 import { ICategory } from "./category";
 
 export interface IGroup {
-  id: number;
+  id: string;
   name: string;
   image: string;
   brief_desc: string;
@@ -9,4 +9,5 @@ export interface IGroup {
   full_desc: string;
   contact_name: string;
   contact_number: string;
+  user_id: string;
 }
