@@ -6,6 +6,7 @@ import { IUser } from "../interfaces/user";
 import Group from "./Group";
 import Category from "./Category";
 import axios from "axios";
+import { baseUrl } from "../config";
 
 function ShowOneGroup({ user }: { user: null | IUser }) {
   const [group, setGroup] = useState<IGroup | null>(null);
@@ -14,7 +15,7 @@ function ShowOneGroup({ user }: { user: null | IUser }) {
 
   useEffect(() => {
     async function fetchGroup() {
-      const resp = await fetch(`/api/groups/${groupId}`);
+      const resp = await fetch(`${baseUrl}/groups/${groupId}`);
       const groupData = await resp.json();
       setGroup(groupData);
     }
@@ -24,7 +25,7 @@ function ShowOneGroup({ user }: { user: null | IUser }) {
   async function deleteGroup(e: SyntheticEvent) {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete("/api/groups/" + groupId, {
+      await axios.delete(`${baseUrl}/groups/` + groupId, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate("/groups");

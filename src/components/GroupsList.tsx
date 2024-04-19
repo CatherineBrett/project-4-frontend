@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Group from "./Group";
 import { IGroup } from "../interfaces/group";
+import { baseUrl } from "../config";
 
 type Groups = null | Array<IGroup>;
 
@@ -9,7 +10,7 @@ function GroupsList() {
 
   useEffect(() => {
     async function fetchGroups() {
-      const resp = await fetch("/api/groups");
+      const resp = await fetch(`${baseUrl}/groups`);
       const data = await resp.json();
       setGroups(data);
     }

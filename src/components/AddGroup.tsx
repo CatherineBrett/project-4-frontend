@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../config";
 
 function AddGroup() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function AddGroup() {
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const resp = await axios.post("/api/groups", formData, {
+    const resp = await axios.post(`${baseUrl}/groups`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
     navigate("/groups");

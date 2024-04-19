@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseUrl } from "../config";
 
 function YourAccount() {
   const { userId } = useParams();
@@ -16,7 +17,7 @@ function YourAccount() {
 
   useEffect(() => {
     async function fetchUser() {
-        const resp = await fetch(`/api/users/${userId}`);
+        const resp = await fetch(`${baseUrl}/users/${userId}`);
         const userData = await resp.json();
 
     }
@@ -31,7 +32,7 @@ function YourAccount() {
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-    const resp = await axios.post("/api/signup", formData);
+    const resp = await axios.post(`${baseUrl}/signup`, formData);
     console.log("resp.data is: ", resp.data);
     navigate("/login");
   }
@@ -75,7 +76,7 @@ function YourAccount() {
                   type="password"
                   name={"password"}
                   onChange={handleChange}
-                  value={formData.password}
+                  // value={formData.password} to-do: put these back in after deployment
                 />
               </div>
             </div>
@@ -87,7 +88,7 @@ function YourAccount() {
                   type="password"
                   name={"password_confirmation"}
                   onChange={handleChange}
-                  value={formData.password_confirmation}
+                  // value={formData.password_confirmation}
                 />
               </div>
             </div>
