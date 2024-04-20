@@ -23,7 +23,7 @@ function GroupsList() {
     <section className="section">
       <div className="container">
         <div className="columns is-multiline">
-          {groups?.map((group) => {
+          {!groups ? <p className="spinner"></p> : groups.map((group) => {
             return (
               <div className="column is-one-quarter-desktop is-one-third-tablet">
                 <Group key={group.id} {...group} />
