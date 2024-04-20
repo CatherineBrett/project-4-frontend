@@ -13,13 +13,19 @@ function AddGroup() {
     full_desc: "",
     contact_name: "",
     contact_number: "",
-    // categories: []
+    categories: [],
   });
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
-    newFormData[fieldName as keyof typeof formData] = e.target.value;
+    if (fieldName === "categories") {
+      if (newFormData[fieldName as keyof typeof formData].length < 4) {
+        newFormData[fieldName as keyof typeof formData] = [...newFormData[fieldName as keyof typeof formData], e.target.value]
+      }
+    } else {
+      newFormData[fieldName as keyof typeof formData] = e.target.value;
+    }
     setFormData(newFormData);
   }
 
@@ -78,25 +84,31 @@ function AddGroup() {
           {/* TO-DO: A user should be able to select up to 3 options. Also need to make changes on the backend 
           so that this question can be submitted along with the other data on the form (the group model doesn't 
           know about categories, which are part of a different many-to-many relationship.) */}
-          {/* <div className="mb-5">
+          <div className="mb-5">
             <label className="label">
               Please select up to three categories which best describe your
               group's activities
             </label>
             <div className="select">
-              <select defaultValue={""} onChange={handleChange} name={"category"}>
-                <option value="" disabled>--Select--</option>
-                <option value="arts-and-crafts">Arts & Crafts</option>
-                <option value="culture">Culture</option>
-                <option value="education">Education</option>
-                <option value="excursions">Excursions</option>
-                <option value="fitness">Fitness</option>
-                <option value="outdoors">Outdoors</option>
-                <option value="reading">Reading</option>
-                <option value="social">Social</option>
+              <select
+                defaultValue={""}
+                onChange={handleChange}
+                name={"categories"}
+              >
+                <option value="" disabled>
+                  --Select--
+                </option>
+                <option value="Arts & Crafts">Arts & Crafts</option>
+                <option value="Culture">Culture</option>
+                <option value="Education">Education</option>
+                <option value="Excursions">Excursions</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Outdoors">Outdoors</option>
+                <option value="Reading">Reading</option>
+                <option value="Social">Social</option>
               </select>
             </div>
-          </div> */}
+          </div>
           <div className="field">
             <label className="label">
               Tell us a bit more about the group, including when you meet and
