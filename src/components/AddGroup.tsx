@@ -19,17 +19,21 @@ function AddGroup() {
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
-    if (fieldName === "categories") {
-      if (newFormData[fieldName as keyof typeof formData].length < 4) {
-        newFormData[fieldName as keyof typeof formData] = [
-          ...newFormData[fieldName as keyof typeof formData],
-          e.target.value,
-        ];
-      }
-    } else {
-      newFormData[fieldName as keyof typeof formData] = e.target.value;
-    }
+    newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+  }
+
+  function handleCheckboxChange(e: any) {
+    const newFormData = structuredClone(formData);
+    const categoriesArray = newFormData["categories" as keyof typeof formData]
+    if (e.target.checked) {
+      newFormData["categories"] = [...categoriesArray, e.target.value];
+    } else {
+      newFormData["categories"] = categoriesArray.filter(category => {
+        return category !== e.target.value
+      })
+    }
+    setFormData(newFormData)
   }
 
   async function handleSubmit(e: SyntheticEvent) {
@@ -101,35 +105,35 @@ function AddGroup() {
             </p>
             <div>
               <label className="checkbox">
-                <input type="checkbox" value="Arts & Crafts" />
+                <input type="checkbox" value="Arts & Crafts" onChange={handleCheckboxChange}/>
                 Arts & Crafts
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Culture" />
+                <input type="checkbox" value="Culture" onChange={handleCheckboxChange}/>
                 Culture
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Education" />
+                <input type="checkbox" value="Education" onChange={handleCheckboxChange}/>
                 Education
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Excursions" />
+                <input type="checkbox" value="Excursions" onChange={handleCheckboxChange}/>
                 Excursions
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Fitness" />
+                <input type="checkbox" value="Fitness" onChange={handleCheckboxChange}/>
                 Fitness
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Outdoors" />
+                <input type="checkbox" value="Outdoors" onChange={handleCheckboxChange}/>
                 Outdoors
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Reading" />
+                <input type="checkbox" value="Reading" onChange={handleCheckboxChange}/>
                 Reading
               </label>
               <label className="checkbox">
-                <input type="checkbox" value="Social" />
+                <input type="checkbox" value="Social" onChange={handleCheckboxChange}/>
                 Social
               </label>
             </div>
