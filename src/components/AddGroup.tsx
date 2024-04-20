@@ -3,10 +3,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../config";
 
+interface IFormState {
+    name: string;
+    image: string;
+    brief_desc: string;
+    full_desc: string;
+    contact_name: string;
+    contact_number: string;
+    categories: Array<string>
+}
+
 function AddGroup() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IFormState>({
     name: "",
     image: "",
     brief_desc: "",
@@ -25,7 +35,7 @@ function AddGroup() {
 
   function handleCheckboxChange(e: any) {
     const newFormData = structuredClone(formData);
-    const categoriesArray = newFormData["categories" as keyof typeof formData]
+    const categoriesArray = newFormData["categories"]
     if (e.target.checked) {
       newFormData["categories"] = [...categoriesArray, e.target.value];
     } else {
