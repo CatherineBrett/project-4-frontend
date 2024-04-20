@@ -21,7 +21,10 @@ function AddGroup() {
     const newFormData = structuredClone(formData);
     if (fieldName === "categories") {
       if (newFormData[fieldName as keyof typeof formData].length < 4) {
-        newFormData[fieldName as keyof typeof formData] = [...newFormData[fieldName as keyof typeof formData], e.target.value]
+        newFormData[fieldName as keyof typeof formData] = [
+          ...newFormData[fieldName as keyof typeof formData],
+          e.target.value,
+        ];
       }
     } else {
       newFormData[fieldName as keyof typeof formData] = e.target.value;
@@ -43,10 +46,13 @@ function AddGroup() {
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="field">
-            <label className="label">Group name</label>
+            <label htmlFor="name" className="label">
+              Group name
+            </label>
             <div className="control">
               <input
                 className="input"
+                id="name"
                 type="text"
                 name={"name"}
                 onChange={handleChange}
@@ -55,10 +61,13 @@ function AddGroup() {
             </div>
           </div>
           <div className="field">
-            <label className="label">Image URL</label>
+            <label htmlFor="image" className="label">
+              Image URL
+            </label>
             <div className="control">
               <input
                 className="input"
+                id="image"
                 type="text"
                 name={"image"}
                 onChange={handleChange}
@@ -67,12 +76,13 @@ function AddGroup() {
             </div>
           </div>
           <div className="field">
-            <label className="label">
+            <label htmlFor="brief_desc" className="label">
               Please give a brief description of your group
             </label>
             <div className="control">
               <input
                 className="input"
+                id="brief_desc"
                 type="text"
                 name={"brief_desc"}
                 maxLength={30}
@@ -85,38 +95,54 @@ function AddGroup() {
           so that this question can be submitted along with the other data on the form (the group model doesn't 
           know about categories, which are part of a different many-to-many relationship.) */}
           <div className="mb-5">
-            <label className="label">
+            <p>
               Please select up to three categories which best describe your
               group's activities
-            </label>
-            <div className="select">
-              <select
-                defaultValue={""}
-                onChange={handleChange}
-                name={"categories"}
-              >
-                <option value="" disabled>
-                  --Select--
-                </option>
-                <option value="Arts & Crafts">Arts & Crafts</option>
-                <option value="Culture">Culture</option>
-                <option value="Education">Education</option>
-                <option value="Excursions">Excursions</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Outdoors">Outdoors</option>
-                <option value="Reading">Reading</option>
-                <option value="Social">Social</option>
-              </select>
+            </p>
+            <div>
+              <label className="checkbox">
+                <input type="checkbox" value="Arts & Crafts" />
+                Arts & Crafts
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Culture" />
+                Culture
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Education" />
+                Education
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Excursions" />
+                Excursions
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Fitness" />
+                Fitness
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Outdoors" />
+                Outdoors
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Reading" />
+                Reading
+              </label>
+              <label className="checkbox">
+                <input type="checkbox" value="Social" />
+                Social
+              </label>
             </div>
           </div>
           <div className="field">
-            <label className="label">
+            <label htmlFor="full_desc" className="label">
               Tell us a bit more about the group, including when you meet and
               how often
             </label>
             <div className="control">
               <textarea
                 className="textarea"
+                id="full_desc"
                 rows={2}
                 name={"full_desc"}
                 maxLength={200}
@@ -126,10 +152,13 @@ function AddGroup() {
             </div>
           </div>
           <div className="field">
-            <label className="label">Contact name</label>
+            <label htmlFor="contact_name" className="label">
+              Contact name
+            </label>
             <div className="control">
               <input
                 className="input"
+                id="contact_name"
                 type="text"
                 name={"contact_name"}
                 onChange={handleChange}
@@ -138,10 +167,13 @@ function AddGroup() {
             </div>
           </div>
           <div className="field">
-            <label className="label">Contact number</label>
+            <label htmlFor="contact_number" className="label">
+              Contact number
+            </label>
             <div className="control">
               <input
                 className="input"
+                id="contact_number"
                 type="text"
                 name={"contact_number"}
                 onChange={handleChange}
