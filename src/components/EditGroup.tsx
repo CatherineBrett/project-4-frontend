@@ -1,7 +1,7 @@
-import { SyntheticEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useEffect, useState, SyntheticEvent } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../config";
+import axios from "axios";
 
 interface IFormState {
   name: string;
@@ -13,7 +13,9 @@ interface IFormState {
   categories: Array<string>;
 }
 
-function AddGroup() {
+function EditGroup() {
+  const { groupId } = useParams();
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<IFormState>({
@@ -49,12 +51,33 @@ function AddGroup() {
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const resp = await axios.post(`${baseUrl}/groups`, formData, {
+    const resp = await axios.put(`${baseUrl}/groups/${groupId}`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const groupId = resp.data.id;
     navigate(`/groups/${groupId}`);
   }
+
+  useEffect(() => {
+    async function fetchGroup() {
+      const resp = await fetch(`${baseUrl}/groups/${groupId}`);
+      const groupData = await resp.json();
+      const groupToEdit = {
+        name: groupData.name,
+        image: groupData.image,
+        brief_desc: groupData.brief_desc,
+        full_desc: groupData.full_desc,
+        contact_name: groupData.contact_name,
+        contact_number: groupData.contact_number,
+        categories: groupData.categories.map((item: any) => {
+          return item.category.name;
+        }),
+      };
+      setFormData(groupToEdit);
+    }
+    fetchGroup();
+  }, []);
+
+  console.log(formData);
 
   return (
     <div className="section">
@@ -118,6 +141,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Arts & Crafts"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Arts & Crafts")}
                 />
                 Arts & Crafts
               </label>
@@ -127,6 +151,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Culture"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Culture")}
                 />
                 Culture
               </label>
@@ -136,6 +161,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Education"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Education")}
                 />
                 Education
               </label>
@@ -145,6 +171,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Excursions"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Excursions")}
                 />
                 Excursions
               </label>
@@ -154,6 +181,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Fitness"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Fitness")}
                 />
                 Fitness
               </label>
@@ -163,6 +191,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Outdoors"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Outdoors")}
                 />
                 Outdoors
               </label>
@@ -172,6 +201,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Reading"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Reading")}
                 />
                 Reading
               </label>
@@ -181,6 +211,7 @@ function AddGroup() {
                   type="checkbox"
                   value="Social"
                   onChange={handleCheckboxChange}
+                  checked={formData["categories"].includes("Social")}
                 />
                 Social
               </label>
@@ -242,4 +273,4 @@ function AddGroup() {
   );
 }
 
-export default AddGroup;
+export default EditGroup;

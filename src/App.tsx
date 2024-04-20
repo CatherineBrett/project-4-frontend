@@ -9,6 +9,7 @@ import ShowOneGroup from "./components/ShowOneGroup"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { baseUrl } from "./config"
+import EditGroup from "./components/EditGroup"
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/login" element={<LogIn fetchUser={fetchUser} />} />
         <Route path="/add-group" element={<AddGroup />} />
         <Route path="/groups/:groupId" element={<ShowOneGroup user={user}/>} />
+        <Route path="/groups/edit-group/:groupId" element={<EditGroup />} />
       </Routes>
     </Router>
   )  

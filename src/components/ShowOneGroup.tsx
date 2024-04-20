@@ -7,6 +7,7 @@ import Group from "./Group";
 import Category from "./Category";
 import axios from "axios";
 import { baseUrl } from "../config";
+import { Link } from "react-router-dom";
 
 function ShowOneGroup({ user }: { user: null | IUser }) {
   const [group, setGroup] = useState<IGroup | null>(null);
@@ -67,7 +68,7 @@ function ShowOneGroup({ user }: { user: null | IUser }) {
               })}
               {group && user && user.id === group.user_id && (
                 <div className="pl-6 mt-6">
-                  <button className="button is-warning mr-5">Update</button>
+                  <Link to={"/groups/edit-group/" + groupId} className="button is-warning mr-5">Update</Link>
                   <button onClick={deleteGroup} className="button is-danger">
                     Delete
                   </button>
