@@ -28,7 +28,7 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
       localStorage.setItem("token", resp.data.token);
       console.log("resp.data is: ", resp.data);
       fetchUser()
-      navigate("/");
+      navigate("/groups");
     } catch (e: any) {
       console.log(e)
       // setErrorMessage(e.response.data.message)
