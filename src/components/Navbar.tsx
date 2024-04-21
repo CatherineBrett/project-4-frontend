@@ -7,9 +7,10 @@ interface INavbarProps {
 }
 
 function Navbar({ user, setUser }: INavbarProps) {
-  const navigate = useNavigate();
 
-  function logOut() {
+  const navigate = useNavigate()
+
+    function logOut() {
     localStorage.removeItem("token");
     setUser(null);
     navigate("/");
@@ -49,7 +50,7 @@ function Navbar({ user, setUser }: INavbarProps) {
               )}
               {user && (
                 <button
-                  onClick={logOut}
+                  onClick={() => logOut()}
                   className="button navbar-item is-ghost"
                 >
                   Log Out

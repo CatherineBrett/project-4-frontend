@@ -1,43 +1,48 @@
-import { SyntheticEvent, useState, useEffect } from "react";
+import { SyntheticEvent, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../config";
+import { IUser } from "../interfaces/user";
 
-function YourAccount() {
-  const { userId } = useParams();
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    current_password: "",
-    current_password_confirmation: "",
-  });
+function YourAccount({user, setUser}: { user: null | IUser, setUser: Function }) {
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    async function fetchUser() {
-        const resp = await fetch(`${baseUrl}/users/${userId}`);
-        const userData = await resp.json();
-
-    }
-  })
-
-  function handleChange(e: any) {
-    const fieldName = e.target.name;
-    const newFormData = structuredClone(formData);
-    newFormData[fieldName as keyof typeof formData] = e.target.value;
-    setFormData(newFormData);
+  function logOut() {
+  localStorage.removeItem("token");
+  setUser(null);
+  navigate("/");
   }
 
+  const [formData, setFormData] = useState(user)
+
+  console.log(formData)
+
+  // function handleChange(e: any) {
+  //   const fieldName = e.target.name;
+  //   const newFormData = structuredClone(formData);
+  //   newFormData[fieldName as keyof typeof formData] = e.target.value;
+  //   setFormData(newFormData);
+  // }
+
+  async function deleteUser() {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`${baseUrl}/users/` + user?.id, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      logOut()
+    } catch (e: any) {
+      console.log(e.response.data);
+    }
+  }
+  
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-    const resp = await axios.post(`${baseUrl}/signup`, formData);
-    console.log("resp.data is: ", resp.data);
-    navigate("/login");
+    deleteUser()
   }
 
-  console.log("formData is: ", formData);
+  // console.log("formData is: ", formData);
 
   return (
     <>
@@ -51,8 +56,10 @@ function YourAccount() {
                   className="input"
                   type="text"
                   name={"username"}
-                  onChange={handleChange}
-                  value={formData.username}
+                  // onChange={handleChange}
+                  value={formData?.username}
+                  required
+                  disabled
                 />
               </div>
             </div>
@@ -61,22 +68,25 @@ function YourAccount() {
               <div className="control">
                 <input
                   className="input"
-                  type="text"
+                  type="email"
                   name={"email"}
-                  onChange={handleChange}
-                  value={formData.email}
+                  // onChange={handleChange}
+                  value={formData?.email}
+                  required
+                  disabled
                 />
               </div>
             </div>
-            <div className="field">
-              <label className="label">Password</label>
+            {/* <div className="field">
+              <label className="label">Password (minimum 10 characters, including 1 uppercase letter)</label>
               <div className="control">
                 <input
                   className="input"
                   type="password"
                   name={"password"}
                   onChange={handleChange}
-                  // value={formData.password} to-do: put these back in after deployment
+                  value={formData.password}
+                  required
                 />
               </div>
             </div>
@@ -88,13 +98,15 @@ function YourAccount() {
                   type="password"
                   name={"password_confirmation"}
                   onChange={handleChange}
-                  // value={formData.password_confirmation}
+                  value={formData.password_confirmation}
+                  required
                 />
               </div>
-            </div>
-            <button className="button has-background-success has-text-white">
-              Sign up
+            </div> */}
+            <button className="button has-background-danger has-text-white">
+              Delete Account
             </button>
+            <p className="has-text-danger mt-2">WARNING: Deleting your account will also delete all of the groups associated with your account</p>
           </form>
         </div>
       </div>
