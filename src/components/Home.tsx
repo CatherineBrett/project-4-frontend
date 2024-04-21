@@ -1,10 +1,10 @@
 function Home() {
    
   return (
-    <section className="hero is-link is-fullheight-with-navbar">
+    <section className="hero is-medium">
       <div className="hero-body has-text-centered">
         <div className="container">
-          <p className="title">Harborne Community Groups</p>
+          <p className="title has-text-white">Harborne Community Groups</p>
         </div>
       </div>
     </section>
