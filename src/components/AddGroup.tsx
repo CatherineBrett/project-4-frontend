@@ -48,6 +48,9 @@ function AddGroup() {
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
+    if (formData.categories.length < 1) {
+      return 
+    }
     const token = localStorage.getItem("token");
     const resp = await axios.post(`${baseUrl}/groups`, formData, {
       headers: { Authorization: `Bearer ${token}` },
@@ -72,6 +75,7 @@ function AddGroup() {
                 name={"name"}
                 onChange={handleChange}
                 value={formData.name}
+                required
               />
             </div>
           </div>
@@ -87,6 +91,7 @@ function AddGroup() {
                 name={"image"}
                 onChange={handleChange}
                 value={formData.image}
+                required
               />
             </div>
           </div>
@@ -103,6 +108,7 @@ function AddGroup() {
                 maxLength={30}
                 onChange={handleChange}
                 value={formData.brief_desc}
+                required
               />
             </div>
           </div>
@@ -200,6 +206,7 @@ function AddGroup() {
                 maxLength={200}
                 onChange={handleChange}
                 value={formData.full_desc}
+                required
               />
             </div>
           </div>
@@ -215,6 +222,7 @@ function AddGroup() {
                 name={"contact_name"}
                 onChange={handleChange}
                 value={formData.contact_name}
+                required
               />
             </div>
           </div>
@@ -230,6 +238,7 @@ function AddGroup() {
                 name={"contact_number"}
                 onChange={handleChange}
                 value={formData.contact_number}
+                required
               />
             </div>
           </div>
