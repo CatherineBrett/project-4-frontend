@@ -50,6 +50,9 @@ function EditGroup() {
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
+    if (formData.categories.length < 1) {
+      return;
+    }
     const token = localStorage.getItem("token");
     const resp = await axios.put(`${baseUrl}/groups/${groupId}`, formData, {
       headers: { Authorization: `Bearer ${token}` },
@@ -95,6 +98,7 @@ function EditGroup() {
                 name={"name"}
                 onChange={handleChange}
                 value={formData.name}
+                required
               />
             </div>
           </div>
@@ -110,6 +114,7 @@ function EditGroup() {
                 name={"image"}
                 onChange={handleChange}
                 value={formData.image}
+                required
               />
             </div>
           </div>
@@ -126,12 +131,13 @@ function EditGroup() {
                 maxLength={30}
                 onChange={handleChange}
                 value={formData.brief_desc}
+                required
               />
             </div>
           </div>
           <div className="mb-5">
             <p className="label">
-              Please select up to three categories which best describe your
+              Please the categories that best describe your
               group's activities
             </p>
             <div>
@@ -231,6 +237,7 @@ function EditGroup() {
                 maxLength={200}
                 onChange={handleChange}
                 value={formData.full_desc}
+                required
               />
             </div>
           </div>
@@ -246,6 +253,7 @@ function EditGroup() {
                 name={"contact_name"}
                 onChange={handleChange}
                 value={formData.contact_name}
+                required
               />
             </div>
           </div>
@@ -261,6 +269,7 @@ function EditGroup() {
                 name={"contact_number"}
                 onChange={handleChange}
                 value={formData.contact_number}
+                required
               />
             </div>
           </div>
