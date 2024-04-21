@@ -13,6 +13,8 @@ function SignUp() {
     password_confirmation: "",
   });
 
+  console.log(formData)
+
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
@@ -43,6 +45,7 @@ function SignUp() {
                   name={"username"}
                   onChange={handleChange}
                   value={formData.username}
+                  required
                 />
               </div>
             </div>
@@ -51,15 +54,16 @@ function SignUp() {
               <div className="control">
                 <input
                   className="input"
-                  type="text"
+                  type="email"
                   name={"email"}
                   onChange={handleChange}
                   value={formData.email}
+                  required
                 />
               </div>
             </div>
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label">Password (minimum 10 characters, including 1 uppercase letter)</label>
               <div className="control">
                 <input
                   className="input"
@@ -67,6 +71,7 @@ function SignUp() {
                   name={"password"}
                   onChange={handleChange}
                   value={formData.password}
+                  required
                 />
               </div>
             </div>
@@ -79,6 +84,7 @@ function SignUp() {
                   name={"password_confirmation"}
                   onChange={handleChange}
                   value={formData.password_confirmation}
+                  required
                 />
               </div>
             </div>
