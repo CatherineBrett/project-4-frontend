@@ -108,7 +108,7 @@ function AddGroup() {
           </div>
           <div className="mb-5">
             <p className="label">
-              Please select up to three categories which best describe your
+              Please select the categories that best describe your
               group's activities
             </p>
             <div>

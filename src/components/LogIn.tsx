@@ -48,10 +48,11 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
               <div className="control">
                 <input
                   className="input"
-                  type="text"
+                  type="email"
                   name={"email"}
                   onChange={handleChange}
                   value={formData.email}
+                  required
                 />
               </div>
             </div>
@@ -60,10 +61,11 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
               <div className="control">
                 <input
                   className="input"
-                  type="password"
+                  type="password"                             
                   name={"password"}
                   onChange={handleChange}
                   value={formData.password}
+                  required
                 />
               </div>
               {/* {errorMessage && <small className="has-text-danger">{errorMessage}</small>} */}
