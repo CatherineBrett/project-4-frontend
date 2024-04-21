@@ -66,9 +66,9 @@ function ShowOneGroup({ user }: { user: null | IUser }) {
                   </div>
                 );
               })}
-              {group && user && user.id === group.user_id && (
+              {group && user && (user.id === group.user_id || user.username === "adminuser") && (
                 <div className="pl-6 mt-6">
-                  <Link to={"/groups/edit-group/" + groupId} className="button is-warning mr-5">Update</Link>
+                  {user.id === group.user_id && <Link to={"/groups/edit-group/" + groupId} className="button is-warning mr-5">Update</Link>}
                   <button onClick={deleteGroup} className="button is-danger">
                     Delete
                   </button>
