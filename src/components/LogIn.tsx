@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../config";
+import { Link } from "react-router-dom";
 
 function LogIn( { fetchUser }: {fetchUser: Function }) {
   
@@ -71,6 +72,7 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
               Log in
             </button>
           </form>
+          <p className="mt-4">Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { baseUrl } from "../config";
 
 function SignUp() {
@@ -86,6 +86,7 @@ function SignUp() {
               Sign up
             </button>
           </form>
+          <p className="mt-4">Already have an account? <Link to="/login">Log in</Link></p>
         </div>
       </div>
     </>
