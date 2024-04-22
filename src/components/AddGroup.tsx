@@ -28,12 +28,21 @@ function AddGroup() {
 
   const [errorData, setErrorData] = useState("");
 
+  const [briefDescCharCount, setBriefDescCharCount] = useState(0)
+  const [fullDescCharCount, setFullDescCharCount] = useState(0)
+
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
     setErrorData("");
+    if (e.target.id === "brief_desc") {
+      setBriefDescCharCount(e.target.value.length);
+    }
+    if (e.target.id === "full_desc") {
+      setFullDescCharCount(e.target.value.length);
+    }
   }
 
   function handleCheckboxChange(e: any) {
@@ -103,7 +112,7 @@ function AddGroup() {
           </div>
           <div className="field">
             <label htmlFor="brief_desc" className="label">
-              Please give a brief description of your group
+              {`Please give a brief description of your group (${briefDescCharCount}/30)`}
             </label>
             <div className="control">
               <input
@@ -200,8 +209,8 @@ function AddGroup() {
           </div>
           <div className="field">
             <label htmlFor="full_desc" className="label">
-              Tell us a bit more about the group, including when you meet and
-              how often
+              {`Tell us a bit more about the group, including when you meet and
+              how often (${fullDescCharCount}/200)`}
             </label>
             <div className="control">
               <textarea
