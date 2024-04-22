@@ -30,12 +30,21 @@ function EditGroup() {
 
   const [errorData, setErrorData] = useState("");
 
+  const [briefDescCharCount, setBriefDescCharCount] = useState(0);
+  const [fullDescCharCount, setFullDescCharCount] = useState(0);
+
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
     setErrorData("");
+    if (e.target.id === "brief_desc") {
+      setBriefDescCharCount(e.target.value.length);
+    }
+    if (e.target.id === "full_desc") {
+      setFullDescCharCount(e.target.value.length);
+    }
   }
 
   function handleCheckboxChange(e: any) {
@@ -82,6 +91,8 @@ function EditGroup() {
           }),
         };
         setFormData(groupToEdit);
+        setBriefDescCharCount(groupToEdit.brief_desc.length);
+        setFullDescCharCount(groupToEdit.full_desc.length);
       } catch (e: any) {
         setErrorData(e.response.data.message);
       }
@@ -128,7 +139,7 @@ function EditGroup() {
           </div>
           <div className="field">
             <label htmlFor="brief_desc" className="label">
-              Please give a brief description of your group
+              Please give a brief description of your group <span className="has-text-grey is-size-7 ml-6">{`(${briefDescCharCount}/30)`}</span>
             </label>
             <div className="control">
               <input
@@ -233,7 +244,7 @@ function EditGroup() {
           <div className="field">
             <label htmlFor="full_desc" className="label">
               Tell us a bit more about the group, including when you meet and
-              how often
+              how often <span className="has-text-grey is-size-7 ml-6">{`(${fullDescCharCount}/200)`}</span>
             </label>
             <div className="control">
               <textarea

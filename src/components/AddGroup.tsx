@@ -112,7 +112,7 @@ function AddGroup() {
           </div>
           <div className="field">
             <label htmlFor="brief_desc" className="label">
-              {`Please give a brief description of your group (${briefDescCharCount}/30)`}
+              Please give a brief description of your group <span className="has-text-grey is-size-7 ml-6">{`(${briefDescCharCount}/30)`}</span>
             </label>
             <div className="control">
               <input
@@ -209,8 +209,8 @@ function AddGroup() {
           </div>
           <div className="field">
             <label htmlFor="full_desc" className="label">
-              {`Tell us a bit more about the group, including when you meet and
-              how often (${fullDescCharCount}/200)`}
+              Tell us a bit more about the group, including when you meet and
+              how often <span className="has-text-grey is-size-7 ml-6">{`(${fullDescCharCount}/200)`}</span>
             </label>
             <div className="control">
               <textarea
