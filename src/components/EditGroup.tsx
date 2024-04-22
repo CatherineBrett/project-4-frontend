@@ -28,11 +28,14 @@ function EditGroup() {
     categories: [],
   });
 
+  const [errorData, setErrorData] = useState("");
+
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+    setErrorData("");
   }
 
   function handleCheckboxChange(e: any) {
@@ -46,41 +49,45 @@ function EditGroup() {
       });
     }
     setFormData(newFormData);
+    setErrorData("");
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    e.preventDefault();
-    if (formData.categories.length < 1) {
-      return;
+    try {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+      const resp = await axios.put(`${baseUrl}/groups/${groupId}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      navigate(`/groups/${groupId}`);
+    } catch (e: any) {
+      setErrorData(e.response.data.message);
     }
-    const token = localStorage.getItem("token");
-    const resp = await axios.put(`${baseUrl}/groups/${groupId}`, formData, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    navigate(`/groups/${groupId}`);
   }
 
   useEffect(() => {
     async function fetchGroup() {
-      const resp = await fetch(`${baseUrl}/groups/${groupId}`);
-      const groupData = await resp.json();
-      const groupToEdit = {
-        name: groupData.name,
-        image: groupData.image,
-        brief_desc: groupData.brief_desc,
-        full_desc: groupData.full_desc,
-        contact_name: groupData.contact_name,
-        contact_number: groupData.contact_number,
-        categories: groupData.categories.map((item: any) => {
-          return item.category.name;
-        }),
-      };
-      setFormData(groupToEdit);
+      try {
+        const resp = await fetch(`${baseUrl}/groups/${groupId}`);
+        const groupData = await resp.json();
+        const groupToEdit = {
+          name: groupData.name,
+          image: groupData.image,
+          brief_desc: groupData.brief_desc,
+          full_desc: groupData.full_desc,
+          contact_name: groupData.contact_name,
+          contact_number: groupData.contact_number,
+          categories: groupData.categories.map((item: any) => {
+            return item.category.name;
+          }),
+        };
+        setFormData(groupToEdit);
+      } catch (e: any) {
+        setErrorData(e.response.data.message);
+      }
     }
     fetchGroup();
   }, []);
-
-  console.log(formData);
 
   return (
     <div className="section">
@@ -138,8 +145,7 @@ function EditGroup() {
           </div>
           <div className="mb-5 mt-5">
             <p className="label">
-              Please the categories that best describe your
-              group's activities
+              Please the categories that best describe your group's activities
             </p>
             <div>
               <label className="checkbox mr-4">
@@ -273,6 +279,9 @@ function EditGroup() {
                 required
               />
             </div>
+            {errorData && (
+              <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
+            )}
           </div>
           <button className="button has-background-success has-text-white">
             Submit

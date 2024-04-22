@@ -47,6 +47,7 @@ function AddGroup() {
       });
     }
     setFormData(newFormData);
+    setErrorData("");
   }
 
   async function handleSubmit(e: SyntheticEvent) {
