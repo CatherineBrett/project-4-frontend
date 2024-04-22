@@ -26,11 +26,14 @@ function AddGroup() {
     categories: [],
   });
 
+  const [errorData, setErrorData] = useState("");
+
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+    setErrorData("");
   }
 
   function handleCheckboxChange(e: any) {
@@ -47,22 +50,23 @@ function AddGroup() {
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    e.preventDefault();
-    if (formData.categories.length < 1) {
-      return 
+    try {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+      const resp = await axios.post(`${baseUrl}/groups`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const groupId = resp.data.id;
+      navigate(`/groups/${groupId}`);
+    } catch (e: any) {
+      setErrorData(e.response.data.message);
     }
-    const token = localStorage.getItem("token");
-    const resp = await axios.post(`${baseUrl}/groups`, formData, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const groupId = resp.data.id;
-    navigate(`/groups/${groupId}`);
   }
 
   return (
     <div className="section">
       <div className="container">
-        <h1 className="has-text-success is-size-4 mb-6">Add your group</h1>
+        <h1 className="has-text-success is-size-4 mb-6">Add a group</h1>
         <form onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="name" className="label">
@@ -115,8 +119,8 @@ function AddGroup() {
           </div>
           <div className="mb-5 mt-5">
             <p className="label">
-              Please select the categories that best describe your
-              group's activities
+              Please select the categories that best describe your group's
+              activities
             </p>
             <div>
               <label className="checkbox mr-4">
@@ -242,6 +246,9 @@ function AddGroup() {
                 required
               />
             </div>
+            {errorData && (
+              <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
+            )}
           </div>
           <button className="button has-background-success has-text-white">
             Submit

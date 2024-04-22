@@ -40,7 +40,7 @@ function Navbar({ user, setUser }: INavbarProps) {
               )}
               {user && (
                 <Link to="/add-group" className="navbar-item">
-                  Add Your Group
+                  Add a Group
                 </Link>
               )}
               {user && (user.username !== "adminuser") && (
