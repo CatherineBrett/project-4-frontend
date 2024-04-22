@@ -4,8 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../config";
 import { Link } from "react-router-dom";
 
-function LogIn( { fetchUser }: {fetchUser: Function }) {
-  
+function LogIn({ fetchUser }: { fetchUser: Function }) {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -13,13 +12,14 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
     password: "",
   });
 
-  // const [errorMessage, setErrorMessage] = useState("")
+  const [errorData, setErrorData] = useState("");
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+    setErrorData("");
   }
 
   async function handleSubmit(e: SyntheticEvent) {
@@ -28,11 +28,11 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
       const resp = await axios.post(`${baseUrl}/login`, formData);
       localStorage.setItem("token", resp.data.token);
       console.log("resp.data is: ", resp.data);
-      fetchUser()
+      fetchUser();
       navigate("/groups");
     } catch (e: any) {
-      console.log(e)
-      // setErrorMessage(e.response.data.message)
+      console.log(e);
+      setErrorData(e.response.data.message);
     }
   }
 
@@ -42,6 +42,7 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
     <>
       <div className="section">
         <div className="container">
+          <h1 className="has-text-success is-size-4 mb-6">Log in</h1>
           <form onSubmit={handleSubmit}>
             <div className="field">
               <label className="label">Email</label>
@@ -61,20 +62,24 @@ function LogIn( { fetchUser }: {fetchUser: Function }) {
               <div className="control">
                 <input
                   className="input"
-                  type="password"                             
+                  type="password"
                   name={"password"}
                   onChange={handleChange}
                   value={formData.password}
                   required
                 />
               </div>
-              {/* {errorMessage && <small className="has-text-danger">{errorMessage}</small>} */}
+              {errorData && (
+                <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
+              )}
             </div>
             <button className="button has-background-success has-text-white">
               Log in
             </button>
           </form>
-          <p className="mt-4">Don't have an account? <Link to="/signup">Sign up</Link></p>
+          <p className="mt-4">
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </p>
         </div>
       </div>
     </>

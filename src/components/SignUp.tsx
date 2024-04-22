@@ -35,6 +35,7 @@ function SignUp() {
     <>
       <div className="section">
         <div className="container">
+          <h1 className="has-text-success is-size-4 mb-6">Sign up</h1>
           <form onSubmit={handleSubmit}>
             <div className="field">
               <label className="label">Username</label>

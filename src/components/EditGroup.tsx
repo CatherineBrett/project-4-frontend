@@ -85,6 +85,7 @@ function EditGroup() {
   return (
     <div className="section">
       <div className="container">
+        <h1 className="has-text-success is-size-4 mb-6">Edit your group</h1>
         <form onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="name" className="label">
@@ -135,7 +136,7 @@ function EditGroup() {
               />
             </div>
           </div>
-          <div className="mb-5">
+          <div className="mb-5 mt-5">
             <p className="label">
               Please the categories that best describe your
               group's activities

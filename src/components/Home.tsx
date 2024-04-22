@@ -12,7 +12,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="copy">
+      <section className="copy has-background-success">
         <div className="has-text-white column is-8 is-offset-2 p-6">
           <p>
             Welcome to Harborne Community Groups! This app is for residents of

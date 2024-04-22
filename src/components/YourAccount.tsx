@@ -4,19 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../config";
 import { IUser } from "../interfaces/user";
 
-function YourAccount({user, setUser}: { user: null | IUser, setUser: Function }) {
-
-  const navigate = useNavigate()
+function YourAccount({
+  user,
+  setUser,
+}: {
+  user: null | IUser;
+  setUser: Function;
+}) {
+  const navigate = useNavigate();
 
   function logOut() {
-  localStorage.removeItem("token");
-  setUser(null);
-  navigate("/");
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
   }
 
-  const [formData, setFormData] = useState(user)
+  const [formData, setFormData] = useState(user);
 
-  console.log(formData)
+  // console.log(formData)
 
   // function handleChange(e: any) {
   //   const fieldName = e.target.name;
@@ -31,15 +36,15 @@ function YourAccount({user, setUser}: { user: null | IUser, setUser: Function })
       await axios.delete(`${baseUrl}/users/` + user?.id, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      logOut()
+      logOut();
     } catch (e: any) {
       console.log(e.response.data);
     }
   }
-  
+
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-    deleteUser()
+    deleteUser();
   }
 
   // console.log("formData is: ", formData);
@@ -48,6 +53,7 @@ function YourAccount({user, setUser}: { user: null | IUser, setUser: Function })
     <>
       <div className="section">
         <div className="container">
+          <h1 className="has-text-success is-size-4 mb-6">Your account</h1>
           <form onSubmit={handleSubmit}>
             <div className="field">
               <label className="label">Username</label>
@@ -106,7 +112,10 @@ function YourAccount({user, setUser}: { user: null | IUser, setUser: Function })
             <button className="button has-background-danger has-text-white">
               Delete Account
             </button>
-            <p className="has-text-danger mt-2">WARNING: Deleting your account will also delete all of the groups associated with your account</p>
+            <p className="has-text-danger is-size-7 mt-2">
+              WARNING: Deleting your account will also delete all of the groups
+              associated with your account
+            </p>
           </form>
         </div>
       </div>
