@@ -39,41 +39,53 @@ function ShowOneGroup({ user }: { user: null | IUser }) {
     <>
       <section className="section">
         <div className="container">
-          <div className="columns">
+          <div className="columns is-vcentered">
             <div className="column">
               <div className="p-6">
                 {group && <Group key={group.id} {...group} />}
               </div>
             </div>
             <div className="column">
-              <p className="p-6">{group?.full_desc}</p>
-              <p className="pl-6">
+              <p>{group?.full_desc}</p>
+              <p className="mt-4">
                 <span className="has-text-weight-bold">Contact:</span>{" "}
                 {group?.contact_name}
               </p>
-              <p className="pl-6 mt-3 mb-6">
+              <p className="mt-2">
                 <span className="has-text-weight-bold">Phone no:</span>{" "}
                 {group?.contact_number}
               </p>
-              {group?.categories.map((category) => {
-                return (
-                  <div className="pl-6">
-                    <Category
-                      key={category.category.id}
-                      id={category.category.id}
-                      name={category.category.name}
-                    />
+              <div className="mt-4">
+                {group?.categories.map((category) => {
+                  return (
+                    <div className="mt-2">
+                      <Category
+                        key={category.category.id}
+                        id={category.category.id}
+                        name={category.category.name}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              {group &&
+                user &&
+                (user.id === group.user_id ||
+                  user.username === "adminuser") && (
+                  <div className="mt-6">
+                    {user.id === group.user_id && (
+                      <Link
+                        to={"/groups/edit-group/" + groupId}
+                        className="button is-warning mr-5"
+                      >
+                        Update
+                      </Link>
+                    )}
+                    <button onClick={deleteGroup} className="button is-danger">
+                      Delete
+                    </button>
                   </div>
-                );
-              })}
-              {group && user && (user.id === group.user_id || user.username === "adminuser") && (
-                <div className="pl-6 mt-6">
-                  {user.id === group.user_id && <Link to={"/groups/edit-group/" + groupId} className="button is-warning mr-5">Update</Link>}
-                  <button onClick={deleteGroup} className="button is-danger">
-                    Delete
-                  </button>
-                </div>
-              )}
+                )}
             </div>
           </div>
         </div>
