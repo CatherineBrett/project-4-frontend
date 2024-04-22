@@ -43,7 +43,7 @@ function Navbar({ user, setUser }: INavbarProps) {
                   Add Your Group
                 </Link>
               )}
-              {user && (
+              {user && (user.username !== "adminuser") && (
                 <Link to="/account" className="navbar-item">
                   Your Account
                 </Link>
