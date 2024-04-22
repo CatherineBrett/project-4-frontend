@@ -103,7 +103,7 @@ function EditGroup() {
   return (
     <div className="section">
       <div className="container">
-        <h1 className="has-text-success is-size-4 mb-6">Edit your group</h1>
+        <h1 className="title has-text-success is-size-4 mb-6">Edit your group</h1>
         <form onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="name" className="label">

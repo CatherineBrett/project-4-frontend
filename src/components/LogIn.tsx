@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../config";
+import loginpeep from "../assets/loginpeep.png";
 
 function LogIn({ fetchUser }: { fetchUser: Function }) {
   const navigate = useNavigate();
@@ -41,44 +42,53 @@ function LogIn({ fetchUser }: { fetchUser: Function }) {
     <>
       <div className="section">
         <div className="container">
-          <h1 className="has-text-success is-size-4 mb-6">Log in</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="email"
-                  name={"email"}
-                  onChange={handleChange}
-                  value={formData.email}
-                  required
-                />
-              </div>
+          <div className="columns is-vcentered">
+            <div className="column p-6">
+              <h1 className="title has-text-success is-size-4 mb-6">Log in</h1>
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <label className="label">Email</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="email"
+                      name={"email"}
+                      onChange={handleChange}
+                      value={formData.email}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Password</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name={"password"}
+                      onChange={handleChange}
+                      value={formData.password}
+                      required
+                    />
+                  </div>
+                  {errorData && (
+                    <p className="has-text-danger mt-2 is-size-7">
+                      {errorData}
+                    </p>
+                  )}
+                </div>
+                <button className="button has-background-success has-text-white">
+                  Log in
+                </button>
+              </form>
+              <p className="mt-4">
+                Don't have an account? <Link to="/signup">Sign up</Link>
+              </p>
             </div>
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="password"
-                  name={"password"}
-                  onChange={handleChange}
-                  value={formData.password}
-                  required
-                />
-              </div>
-              {errorData && (
-                <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
-              )}
+            <div className="column is-flex is-justify-content-center">
+              <img src={loginpeep} className="loginpeep mt-4" />
             </div>
-            <button className="button has-background-success has-text-white">
-              Log in
-            </button>
-          </form>
-          <p className="mt-4">
-            Don't have an account? <Link to="/signup">Sign up</Link>
-          </p>
+          </div>
         </div>
       </div>
     </>
