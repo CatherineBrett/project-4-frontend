@@ -13,20 +13,25 @@ function SignUp() {
     password_confirmation: "",
   });
 
-  console.log(formData)
+  const [errorData, setErrorData] = useState("");
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+    setErrorData("");
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    e.preventDefault();
-    const resp = await axios.post(`${baseUrl}/signup`, formData);
-    console.log("resp.data is: ", resp.data);
-    navigate("/login");
+    try {
+      e.preventDefault();
+      const resp = await axios.post(`${baseUrl}/signup`, formData);
+      console.log("resp.data is: ", resp.data);
+      navigate("/login");
+    } catch (e: any) {
+      setErrorData(e.response.data.message)
+    }
   }
 
   console.log("formData is: ", formData);
@@ -88,6 +93,9 @@ function SignUp() {
                   required
                 />
               </div>
+              {errorData && (
+                <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
+              )}
             </div>
             <button className="button has-background-success has-text-white">
               Sign up

@@ -1,8 +1,7 @@
 import { SyntheticEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../config";
-import { Link } from "react-router-dom";
 
 function LogIn({ fetchUser }: { fetchUser: Function }) {
   const navigate = useNavigate();
