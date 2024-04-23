@@ -77,7 +77,7 @@ function LogIn({ fetchUser }: { fetchUser: Function }) {
                     </p>
                   )}
                 </div>
-                <button className="button has-background-success has-text-white">
+                <button className="button has-background-success has-text-white mt-4">
                   Log in
                 </button>
               </form>

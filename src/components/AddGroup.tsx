@@ -260,7 +260,7 @@ function AddGroup() {
               <p className="has-text-danger mt-2 is-size-7">{errorData}</p>
             )}
           </div>
-          <button className="button has-background-success has-text-white">
+          <button className="button has-background-success has-text-white mt-4">
             Submit
           </button>
         </form>

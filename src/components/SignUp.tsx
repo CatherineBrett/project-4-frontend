@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { baseUrl } from "../config";
 import signuppeep from "../assets/signuppeep.png";
+import signuppeeptwo from "../assets/signuppeeptwo.png";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ function SignUp() {
       <div className="section">
         <div className="container">
           <div className="columns is-vcentered">
-            <div className="column">
+            <div className="column is-flex is-justify-content-left is-one-third">
+              <img src={signuppeep} className="signuppeep mr-6" />
+            </div>
+            <div className="column is-one-third">
               <h1 className="title has-text-success is-size-4 mb-6">Sign up</h1>
               <form onSubmit={handleSubmit}>
                 <div className="field">
@@ -105,7 +109,7 @@ function SignUp() {
                     </p>
                   )}
                 </div>
-                <button className="button has-background-success has-text-white">
+                <button className="button has-background-success has-text-white mt-4">
                   Sign up
                 </button>
               </form>
@@ -113,8 +117,8 @@ function SignUp() {
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </div>
-            <div className="column is-flex is-justify-content-center">
-              <img src={signuppeep} className="signuppeep mt-4" />
+            <div className="column is-flex is-justify-content-center is-one-third">
+              <img src={signuppeeptwo} className="signuppeeptwo mt-4 ml-6" />
             </div>
           </div>
         </div>

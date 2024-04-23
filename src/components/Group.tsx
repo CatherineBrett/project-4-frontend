@@ -14,7 +14,7 @@ function Group({ id, name, image, brief_desc }: IGroup) {
           </figure>
         </div>
         <div className="card-content has-text-centered">
-          <p className="brief-desc">{brief_desc}</p>
+          <p className="brief-desc has-text-weight-semibold">{brief_desc}</p>
         </div>
       </div>
     </Link>

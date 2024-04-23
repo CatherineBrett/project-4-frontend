@@ -75,12 +75,11 @@ function YourAccount({
                     />
                   </div>
                 </div>
-                <button className="button has-background-danger has-text-white">
-                  Delete Account
+                <button className="button has-background-danger has-text-white mt-4">
+                  Delete
                 </button>
-                <p className="has-text-danger is-size-7 mt-2">
-                  WARNING: Deleting your account will also delete all of the
-                  groups associated with your account
+                <p className="has-text-danger is-size-7 mt-3">
+                  WARNING: Deleting your account will also delete all groups associated with your account
                 </p>
               </form>
             </div>
