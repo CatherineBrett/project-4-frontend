@@ -51,7 +51,7 @@ function AddGroup() {
     if (e.target.checked) {
       newFormData["categories"] = [...categoriesArray, e.target.value];
     } else {
-      newFormData["categories"] = categoriesArray.filter((category) => {
+      newFormData["categories"] = categoriesArray.filter((category: any) => {
         return category !== e.target.value;
       });
     }
