@@ -107,15 +107,15 @@ Now that many of the basics were in place on the backend, I moved on to the fron
 - Creating files for most of the other components I would need
 - Making an `IGroup` interface, a `Group` component and a `GroupsList` component
 - Successfully fetching from the get all groups endpoint and rendering all 8 groups on the page
-- Updating my seeding to change a problematic photo and the length of the `brief_desc` fields (a character limit in the appropriate components would later manage this)
+- Updating my seeding to change an image and the length of the `brief_desc` fields (a character limit in the appropriate components would later manage this)
 
 I then wrote a `Category` component to render the categories via a `ShowOneGroup` component, plus an `ICategory` interface. For my `SignUp` component, on the backend I added a password confirmation to my signup endpoint, and then created a form on the frontend. I tested this by signing up a new user via the form and checking that my database had updated accordingly. My login page followed, and again I tested this to check I was getting a token in local storage and being navigated to the home page. I began and briefly parked the more complex `AddGroup` component, and then created my secure route, adding it as a decorator to the other routes that required it. I then returned to my `AddGroup` component, and, temporarily commenting out the Category `<select>` element, checked that I was able to submit the rest of the form.
 
 Next, I revisited the backend to add permissions, validation, error handling, custom validation on passwords etc. Having made changes, I retested my endpoints and found that delete user was no longer working. I spent a good while trying to figure out where it was failing, printing line numbers to the console to help establish precisely which line the code was failing on. It turned out to be `user_to_delete.remove()`. I was advised that this was likely to be due to a user’s relationship to groups – that deleting a user would leave a group without an owner, which was a requirement. Trying `cascade="all, delete"` didn’t fix the issue, so I made a note to come back to it later on.
 
-Before leaving the backend, I made a get current user handler, and then returned to the frontend to add user/visitor views, edit/delete buttons for a group’s creator, the ability to log out, and a work-in-progress Your Account page.
+Before leaving the backend, I made a `get_current_user` handler, and then returned to the frontend to add user/visitor views, edit/delete buttons for a group’s creator, the ability to log out, and a work-in-progress Your Account page.
 
-Having reflected on the many-to-many relationship, it was now time to tackle the create group handler and `AddGroup` component (see Challenges/Wins below)!
+Having reflected on the many-to-many relationship, it was now time to tackle the `create_group` handler and `AddGroup` component (see Challenges/Wins below)!
 
 Once the `AddGroup` component was up and running, I used this as a template for an `EditGroup` component, which pre-populated the update form after fetching an existing group by its ID:
 
@@ -147,7 +147,7 @@ I gave the admin user the permission to delete (but not edit) any group.
 
 I moved on to some styling, and added in-built browser validation to the various forms, as well as an early return on the Create/Edit Group forms to prevent a user submitting the form if they had not selected any categories. (This needed handling differently to the text inputs, which could simply be given the `required` property.) I then updated the Your Account page to display the user’s username and email, plus the option to delete their account (see Challenges/Wins).
 
-I added some copy to the home page to explain what the app was for and how to use it, and then moved on to error handling. As usernames have to be unique, I added some logic to the signup handler to manage this: I made a variable, `username_taken`, by looking up the first – which, if present, would also be the only – user in the database with the same username that the new user was attempting to sign up with. If nothing was found, `username_taken` would be falsy so no error would be produced. If the proposed username was present in the database, I returned “Username not available” and the form could not be submitted.
+I added some copy to the home page to explain what the app was for and how to use it, and then moved on to error handling. As usernames have to be unique, I added some logic to the `sign_up` handler to manage this: I made a variable, `username_taken`, by looking up the first – which, if present, would also be the only – user in the database with the same username that the new user was attempting to sign up with. If nothing was found, `username_taken` would be falsy so no error would be produced. If the proposed username was present in the database, I returned “Username not available” and the form could not be submitted.
 
 ```py
 username_taken = (
@@ -195,7 +195,7 @@ def create_group():
         categories_list = group_dictionary["categories"]
         del group_dictionary["categories"]
 
-        {/* snip */}
+        #snip...
 
         group_dictionary["user_id"] = g.current_user.id
         group_model = group_serializer.load(group_dictionary)
